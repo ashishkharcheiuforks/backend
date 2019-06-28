@@ -201,7 +201,7 @@ def response(request):
         
         #status='TX_SUCCESS'
         back_response={
-                'PAY_STATUS':res,
+                'PAY_STATUS':staus,
             }
 
 
