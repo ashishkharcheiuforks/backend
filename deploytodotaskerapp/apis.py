@@ -103,7 +103,7 @@ def customer_add_order(request):
                 'MERCHANT_ID':MERCHANT_ID,
                 'ORDER_ID':order_id,
                 'TXN_AMOUNT': bill_amount,
-                'CUST_ID':customer,
+                'CUST_ID':customer.user.username,
                 'CALLBACK_URL':CALLBACK_URL,
                 'CHANNEL_ID':'WEB',
                 'WEBSITE': 'WEBSTAGING',
