@@ -191,12 +191,12 @@ def response(request):
         # for Production
         # url = "https://securegw.paytm.in/order/status"
 
-        #r = requests.post(url, data = post_data, headers = {"Content-type": "application/json"}).json()
-        #st=r.json()
+        r = requests.post(url, data = post_data, headers = {"Content-type": "application/json"}).json()
+        st=r.json()
 
-        #staus=st['STATUS']
+        staus=st['STATUS']
 
-        status='TXN_SUCCESS'
+        #status='TXN_SUCCESS'
         back_response={
                 'PAY_STATUS':status,
             }
@@ -208,8 +208,8 @@ def response(request):
 
             ##Step 2 - Create an Order
             order = Order.objects.create(
-               customer =Customer.objects.first(), #customer,
-               registration_id =1,# request.POST["registration_id"],
+               customer =customer,
+               registration_id =request.POST["registration_id"],
                total = order_total,
                status = Order.COOKING,
                address = request.POST["address"]
@@ -223,7 +223,7 @@ def response(request):
                    quantity = meal["quantity"],
                    sub_total = Meal.objects.get(id = meal["meal_id"]).price * meal["quantity"]
                    )
-            #PaytmHistory.objects.create(user=request.user)#, **data_dict
+            PaytmHistory.objects.create(user=request.user)#, **data_dict
             return JsonResponse(back_response)
         #for key in request.POST:
          #   data_dict[key] = request.POST[key]
