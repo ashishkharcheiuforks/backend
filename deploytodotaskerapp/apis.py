@@ -81,7 +81,7 @@ def customer_add_order(request):
 
         #order_total = 10
         
-
+        order_details = json.loads(request.POST["order_details"])
         order_total=0
         for meal in order_details:
             order_total += Meal.objects.get(id = meal["meal_id"]).price * meal["quantity"]
