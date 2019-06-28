@@ -90,7 +90,7 @@ def customer_add_order(request):
         #get_lang = "/" + get_language() if get_language() else ''
 
         # Generating unique temporary ids
-        order_id = Checksum.__id_generator__()
+        order_id ='gggg'# Checksum.__id_generator__()
         CALLBACK_URL ="https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=" + order_id
 
 
