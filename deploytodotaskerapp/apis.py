@@ -124,10 +124,10 @@ def response(request):
    if request.method=="GET":
         url = "https://securegw.paytm.in/order/status"
         post_data={
-            'MID':'hggg'
+            'MID':'hghhhhgg'
             }
         r = requests.post(url, data = post_data, headers = {"Content-type": "application/json"}).json()
-        return JsonResponse(post_data)
+        return JsonResponse(r.text)
 
    if request.method == "POST":
 
