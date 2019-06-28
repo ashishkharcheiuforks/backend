@@ -155,7 +155,7 @@ def response(request):
                 'MERCHANT_ID':MERCHANT_ID,
                 'ORDER_ID':orderId,
                 'TXN_AMOUNT': bill_amount,
-                'CUST_ID':'harish@pickrr.com',
+                'CUST_ID':customer.user.username,
                 'CALLBACK_URL':CALLBACK_URL,
                 'CHANNEL_ID':'WEB',
                 'WEBSITE': 'WEBSTAGING',
