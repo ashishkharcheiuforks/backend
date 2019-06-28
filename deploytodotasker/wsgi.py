@@ -8,10 +8,13 @@ https://docs.djangoproject.com/en/1.10/howto/deployment/wsgi/
 """
 
 import os
-from django.core.wsgi import get_wsgi_application
-from whitenoise.django import DjangoWhiteNoise
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bootcamp.settings")
+from django.core.wsgi import get_wsgi_application
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "deploytodotasker.settings")
 
 application = get_wsgi_application()
+
+# Use whitenoise package to serve static files on Heroku
+from whitenoise.django import DjangoWhiteNoise
 application = DjangoWhiteNoise(application)
