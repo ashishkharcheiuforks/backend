@@ -103,7 +103,7 @@ def customer_add_order(request):
                 'MERCHANT_ID':MERCHANT_ID,
                 'ORDER_ID':order_id,
                 'TXN_AMOUNT': bill_amount,
-                'CUST_ID':Customer._self_(customer),
+                'CUST_ID':customer,
                 'CALLBACK_URL':CALLBACK_URL,
                 'CHANNEL_ID':'WEB',
                 'WEBSITE': 'WEBSTAGING',
@@ -137,11 +137,10 @@ def response(request):
         CALLBACK_URL ="https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=" + orderId
 
         # Get token
-        ##access_token = AccessToken.objects.get(token = request.POST.get("access_token"),
-           ## expires__gt = timezone.now())
+        access_token = AccessToken.objects.get(token = request.POST.get("access_token"),expires__gt = timezone.now())
 
         # Get profile
-        ##customer = access_token.user.customer
+        customer = access_token.user.customer
 
         #Get Order Details
         order_details = json.loads(request.POST["order_details"])
