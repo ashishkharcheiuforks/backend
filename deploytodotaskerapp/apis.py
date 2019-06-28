@@ -100,7 +100,7 @@ def customer_add_order(request):
                 #if bill_amount:
         data_dict = {
                 'MERCHANT_ID':MERCHANT_ID,
-                'ORDER_ID':'hhhh'#order_id,
+                'ORDER_ID':'hhhh',#order_id,
                 'TXN_AMOUNT': bill_amount,
                 'CUST_ID':'harish@pickrr.com',
                 'CALLBACK_URL':CALLBACK_URL,
