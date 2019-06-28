@@ -57,7 +57,7 @@ def customer_add_order(request):
             {"status": "success"}
     """
 
-    if request.method == "POST":
+    #if request.method == "POST":
 
 
 
@@ -78,11 +78,11 @@ def customer_add_order(request):
         ##customer = access_token.user.customer
 
         #Get Order Details
-        order_details = json.loads(request.POST["order_details"])
+        #order_details = json.loads(request.POST["order_details"])
 
-        order_total = 0
-        for meal in order_details:
-            order_total += Meal.objects.get(id = meal["meal_id"]).price * meal["quantity"]
+        order_total = 10
+        #for meal in order_details:
+         #   order_total += Meal.objects.get(id = meal["meal_id"]).price * meal["quantity"]
 
 
         MERCHANT_KEY = settings.PAYTM_MERCHANT_KEY
@@ -100,7 +100,7 @@ def customer_add_order(request):
                 #if bill_amount:
         data_dict = {
                 'MERCHANT_ID':MERCHANT_ID,
-                'ORDER_ID':order_id,
+                'ORDER_ID':'hhhh'#order_id,
                 'TXN_AMOUNT': bill_amount,
                 'CUST_ID':'harish@pickrr.com',
                 'CALLBACK_URL':CALLBACK_URL,
