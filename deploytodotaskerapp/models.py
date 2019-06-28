@@ -78,8 +78,8 @@ class OrderDetails(models.Model):
         return str(self.id)
 
 class PaytmHistory(models.Model):
-
-    GATEWAYNAME=models.CharField('BANK NAME', max_length=50, null=True, blank=True)
+    
+    TXNTYPE=models.CharField('TNX TYPE', max_length=50, null=True, blank=True)
     ORDERID = models.CharField('ORDER ID', max_length=30)
     TXNDATE = models.DateTimeField('TXN DATE', default=timezone.now)
     TXNID = models.IntegerField('TXN ID')
