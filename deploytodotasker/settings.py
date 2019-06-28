@@ -26,8 +26,7 @@ SECRET_KEY = '-jg2ngl7$$ejo!&cr7v^#yxcyggdo#bm4!op3x3m72nnf5#1l0'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'rafi9z.pythonanywhere.com',
-    'backend-rafi.heroku.com',
+    'backend-rafi.herokuapp.com',
     ]
 
 
