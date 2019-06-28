@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'rafi9z.pythonanywhere.com',
-    'https://backend-rafi.heroku.com/',
+    'backend-rafi.heroku.com',
     ]
 
 
