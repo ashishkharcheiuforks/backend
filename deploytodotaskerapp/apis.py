@@ -57,7 +57,7 @@ def customer_add_order(request):
             {"status": "success"}
     """
 
-    #if request.method == "POST":
+    if request.method == "GET":
 
 
 
