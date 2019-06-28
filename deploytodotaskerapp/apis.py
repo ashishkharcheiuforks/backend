@@ -72,10 +72,10 @@ def customer_add_order(request):
         # Get Order Details
 
         # Get token
-        #access_token = AccessToken.objects.get(token = request.POST.get("access_token"),expires__gt = timezone.now())
+        access_token = AccessToken.objects.get(token = request.POST.get("access_token"),expires__gt = timezone.now())
 
         # Get profile
-        ##customer = access_token.user.customer
+        customer = access_token.user.customer
 
         
 
@@ -103,7 +103,7 @@ def customer_add_order(request):
                 'MERCHANT_ID':MERCHANT_ID,
                 'ORDER_ID':order_id,
                 'TXN_AMOUNT': bill_amount,
-                'CUST_ID':'harish@pickrr.com',
+                'CUST_ID':Customer._self_(customer),
                 'CALLBACK_URL':CALLBACK_URL,
                 'CHANNEL_ID':'WEB',
                 'WEBSITE': 'WEBSTAGING',
