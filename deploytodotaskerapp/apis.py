@@ -197,7 +197,7 @@ def response(request):
 
         #staus=res.status_code#res_dict['STATUS']
 
-        #status='TXN_SUCCESS'
+        status='TX_SUCCESS'
         back_response={
                 'PAY_STATUS':res,
             }
