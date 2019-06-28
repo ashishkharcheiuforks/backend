@@ -124,10 +124,12 @@ def response(request):
    if request.method=="GET":
         url = "https://securegw.paytm.in/order/status"
         post_data={
-            'MID':'hghhhhgg'
+            'MID':'Ulbgcl83114033677105',
+            "CHECKSUMHASH":"sdddddddddddddd",
+            "ORDERID":"ggdff"
             }
         r = requests.post(url, data = post_data, headers = {"Content-type": "application/json"}).json()
-        return JsonResponse(r.text)
+        return JsonResponse(r.json())
 
    if request.method == "POST":
 
@@ -192,7 +194,7 @@ def response(request):
         # url = "https://securegw.paytm.in/order/status"
 
         res = requests.post(url, data = post_data, headers = {"Content-type": "application/json"}).json()
-        res_dict=json.loads(res)
+        res_dict=json.loads(res.text)
         #st=r.json()
         
         staus=res_dict['STATUS']
