@@ -192,12 +192,12 @@ def response(request):
         # url = "https://securegw.paytm.in/order/status"
 
         res = requests.post(url, data = post_data, headers = {"Content-type": "application/json"}).json()
-        #res_dict=json.loads(res.text)
+        res_dict=json.loads(res)
         #st=r.json()
-
-        #staus=res.status_code#res_dict['STATUS']
-
-        status='TX_SUCCESS'
+        
+        staus=res_dict['STATUS']
+        
+        #status='TX_SUCCESS'
         back_response={
                 'PAY_STATUS':res,
             }
