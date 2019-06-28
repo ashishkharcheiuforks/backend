@@ -80,11 +80,11 @@ def customer_add_order(request):
         #Get Order Details
         #order_details = json.loads(request.POST["order_details"])
 
-        order_total = 10
+        #order_total = 10
         #for meal in order_details:
          #   order_total += Meal.objects.get(id = meal["meal_id"]).price * meal["quantity"]
 
-
+        order_total=100
         MERCHANT_KEY = settings.PAYTM_MERCHANT_KEY
         MERCHANT_ID = settings.PAYTM_MERCHANT_ID
         #get_lang = "/" + get_language() if get_language() else ''
