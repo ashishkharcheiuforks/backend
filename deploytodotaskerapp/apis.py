@@ -110,7 +110,7 @@ def customer_add_order(request):
                  # 'payt_STATUS':'success'
         }
         param_dict = data_dict
-        param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(data_dict, MERCHANT_KEY)
+        #param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(data_dict, MERCHANT_KEY)
         #return render(request,"response.html",{"paytm":param_dict})
         return JsonResponse(param_dict)
         #else:
