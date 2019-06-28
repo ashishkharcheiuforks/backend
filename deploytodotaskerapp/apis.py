@@ -186,16 +186,16 @@ def response(request):
         post_data = json.dumps(paytmParams)
 
         # for Staging
-        url = "https://securegw-stage.paytm.in/order/status"
+        url = "https://securegw-stage.paytm.in/order/status/"
 
         # for Production
         # url = "https://securegw.paytm.in/order/status"
 
         res = requests.post(url, data = post_data, headers = {"Content-type": "application/json"}).json()
-        res_dict=json.loads(res.text)
+        #res_dict=json.loads(res.text)
         #st=r.json()
 
-        staus=res_dict['STATUS']
+        staus=res.status_code#res_dict['STATUS']
 
         #status='TXN_SUCCESS'
         back_response={
@@ -226,6 +226,7 @@ def response(request):
                    )
             PaytmHistory.objects.create(user=request.user,**res_dict)#, **data_dict
             return JsonResponse(back_response)
+        return JsonResponse(back_response)
         #for key in request.POST:
          #   data_dict[key] = request.POST[key]
         #verify = Checksum.verify_checksum(data_dict, MERCHANT_KEY, data_dict['CHECKSUMHASH'])
