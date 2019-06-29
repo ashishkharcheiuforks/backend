@@ -185,7 +185,7 @@ def response(request):
         #res_dict=res['body']['resultInfo']
         #st=r.json()
         
-        staus=res_dict['STATUS']
+        staus=res['STATUS']
         
         #status='TX_SUCCESS'
         back_response={
