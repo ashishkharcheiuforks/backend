@@ -113,7 +113,7 @@ def customer_add_order(request):
         param_dict = data_dict
         param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(data_dict, MERCHANT_KEY)
         #return render(request,"response.html",{"paytm":param_dict})
-        return JsonResponse(json.dumps(param_dict))
+        return JsonResponse(param_dict)
         #else:
         #return HttpResponse("{% for key,value in paytm.items %} {{key}} =  {{value}} <br>{% endfor %}")#JsonResponse({"payt_STATUS": "failed"})
 
@@ -180,7 +180,7 @@ def response(request):
         #paytmParams['CHECKSUMHASH'] = param_dict['CHECKSUMHASH']
 
         # prepare JSON string for request
-        post_data = json.dumps(paytmParams)
+        post_data = paytmParams
 
         # for Staging
         url = "https://securegw-stage.paytm.in/order/status"
