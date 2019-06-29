@@ -64,7 +64,7 @@ def customer_add_order(request):
         MERCHANT_ID = settings.PAYTM_MERCHANT_ID
         CHANNEL_ID = settings.CHANNEL_ID
         WEBSITE=settings.WEBSITE
-        NDUSTRY_TYPE_ID=settings.NDUSTRY_TYPE_ID
+        INDUSTRY_TYPE_ID=settings.INDUSTRY_TYPE_ID
 
         ## Get token
         access_token = AccessToken.objects.get(token = request.POST.get("access_token"),expires__gt = timezone.now())
