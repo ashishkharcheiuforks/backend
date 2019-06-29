@@ -113,7 +113,7 @@ def customer_add_order(request):
         param_dict = data_dict
         param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(data_dict, MERCHANT_KEY)
         #return render(request,"response.html",{"paytm":param_dict})
-        return JsonResponse(param_dict)
+        return JsonResponse(json.dumps(param_dict))
         #else:
         #return HttpResponse("{% for key,value in paytm.items %} {{key}} =  {{value}} <br>{% endfor %}")#JsonResponse({"payt_STATUS": "failed"})
 
@@ -169,31 +169,30 @@ def response(request):
         param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(data_dict, MERCHANT_KEY)
 
         # initialize a dictionary
-        paytmParams = dict()
+        paytmParams = {
+            'MID':'Ulbgcl83114033677105',
+            'CHECKSUMHASH':'sdddddddddddddd',
+            'ORDERID':'ggdff'
 
-        # Find your MID in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys
-        paytmParams["MID"] =  MERCHANT_ID
-
-        # Enter your order id which needs to be check status for
-        paytmParams["ORDERID"] =orderId
-
-        # Generate checksum by parameters we have in body
-        # Find your Merchant Key in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys
-        #checksum = Checksum.generate_checksum(paytmParams, "YOUR_KEY_HERE")
+        }
 
         # put generated checksum value here
-        paytmParams["CHECKSUMHASH"] = param_dict['CHECKSUMHASH']
+        #paytmParams['CHECKSUMHASH'] = param_dict['CHECKSUMHASH']
 
         # prepare JSON string for request
         post_data = json.dumps(paytmParams)
 
         # for Staging
-        url = "https://securegw-stage.paytm.in/order/status/"
+        url = "https://securegw-stage.paytm.in/order/status"
 
         # for Production
         # url = "https://securegw.paytm.in/order/status"
 
         res = requests.post(url, data = post_data, headers = {"Content-type": "application/json"}).json()
+
+        if('ErrorMsg' in res)
+            return JsonResponse({'PAY_STATUS':res['ErrorMsg']})
+
         res_dict=res['body']['resultInfo']
         #st=r.json()
         
