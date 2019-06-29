@@ -78,22 +78,21 @@ class OrderDetails(models.Model):
         return str(self.id)
 
 class PaytmHistory(models.Model):
-    
-    TXNTYPE=models.CharField('TNX TYPE', max_length=50, null=True, blank=True)
-    ORDERID = models.CharField('ORDER ID', max_length=30)
-    TXNDATE = models.DateTimeField('TXN DATE', default=timezone.now)
-    TXNID = models.IntegerField('TXN ID')
-    BANKTXNID = models.IntegerField('BANK TXN ID', null=True, blank=True)
-    BANKNAME = models.CharField('BANK NAME', max_length=50, null=True, blank=True)
-    RESPCODE = models.IntegerField('RESP CODE')
-    PAYMENTMODE = models.CharField('PAYMENT MODE', max_length=10, null=True, blank=True)
-    CURRENCY = models.CharField('CURRENCY', max_length=4, null=True, blank=True)
-    GATEWAYNAME = models.CharField("GATEWAY NAME", max_length=30, null=True, blank=True)
-    MID = models.CharField(max_length=40)
-    RESPMSG = models.TextField('RESP MSG', max_length=250)
+    TXNID = models.CharField('ORDER ID', max_length=70)
+    BANKTXNID = models.CharField('BANK TXN ID', max_length=60, null=True, blank=True)
+    ORDERID = models.CharField('ORDER ID', max_length=70)
     TXNAMOUNT = models.FloatField('TXN AMOUNT')
     STATUS = models.CharField('STATUS', max_length=30)
-    resultStatus = models.CharField('STATUS', max_length=30,default='unrecognized')
+    TXNTYPE=models.CharField('TNX TYPE', max_length=10, null=True, blank=True)
+    GATEWAYNAME = models.CharField("GATEWAY NAME", max_length=20, null=True, blank=True)
+    RESPCODE = models.CharField('STATUS', max_length=20)
+    RESPMSG = models.TextField('RESP MSG', max_length=600)
+    BANKNAME = models.CharField('BANK NAME', max_length=600, null=True, blank=True)
+    MID = models.CharField(max_length=40)
+    PAYMENTMODE = models.CharField('PAYMENT MODE', max_length=20, null=True, blank=True)
+    REFUNDAMT = models.FloatField('RFUND AMOUNT',default=0)
+    TXNDATE = models.DateTimeField('TXN DATE', default=timezone.now)
+    #CURRENCY = models.CharField('CURRENCY', max_length=4, null=True, blank=True)
 
     def __unicode__(self):
         return self.STATUS
