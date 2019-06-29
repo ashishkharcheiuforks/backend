@@ -177,7 +177,7 @@ def response(request):
         # url = "https://securegw.paytm.in/order/status"
 
         pay_res = requests.post(url, data = post_data, headers = {"Content-type": "application/json"}).json()
-        print(res)
+        #print(res)
         if('ErrorMsg' in res):
             return JsonResponse({'PAY_STATUS':res['ErrorMsg']})
 
