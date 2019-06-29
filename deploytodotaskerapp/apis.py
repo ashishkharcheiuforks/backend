@@ -62,7 +62,6 @@ def customer_add_order(request):
         ## Get Paytm param Details
         MERCHANT_KEY = settings.PAYTM_MERCHANT_KEY
         MERCHANT_ID = settings.PAYTM_MERCHANT_ID
-        CALLBACK_URL =settings.CALLBACK_URL + order_id
         CHANNEL_ID = settings.CHANNEL_ID
         WEBSITE=settings.WEBSITE
         NDUSTRY_TYPE_ID=settings.NDUSTRY_TYPE_ID
@@ -82,6 +81,7 @@ def customer_add_order(request):
  
         ## Generating unique  ids
         order_id = Checksum.__id_generator__()
+        CALLBACK_URL =settings.CALLBACK_URL + order_id
         
 
         data_dict = {
