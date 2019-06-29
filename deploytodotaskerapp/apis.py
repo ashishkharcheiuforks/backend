@@ -190,7 +190,7 @@ def response(request):
 
         res = requests.post(url, data = post_data, headers = {"Content-type": "application/json"}).json()
 
-        if('ErrorMsg' in res)
+        if('ErrorMsg' in res):
             return JsonResponse({'PAY_STATUS':res['ErrorMsg']})
 
         res_dict=res['body']['resultInfo']
