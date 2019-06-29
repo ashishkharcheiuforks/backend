@@ -185,11 +185,11 @@ def response(request):
         #res_dict=res['body']['resultInfo']
         #st=r.json()
         
-        staus=res['STATUS']
+        status=res['STATUS']
         
         #status='TX_SUCCESS'
         back_response={
-                'PAY_STATUS':staus,
+                'PAY_STATUS':status,
             }
 
 
