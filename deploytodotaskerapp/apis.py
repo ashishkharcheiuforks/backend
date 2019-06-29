@@ -178,8 +178,8 @@ def response(request):
 
         pay_res = requests.post(url, data = post_data, headers = {"Content-type": "application/json"}).json()
         #print(res)
-        if('ErrorMsg' in res):
-            return JsonResponse({'PAY_STATUS':res['ErrorMsg']})
+        if('ErrorMsg' in pay_res):
+            return JsonResponse({'PAY_STATUS':pay_res['ErrorMsg']})
 
         
         #res_dict=res['body']['resultInfo']
