@@ -78,6 +78,7 @@ class OrderDetails(models.Model):
         return str(self.id)
 
 class PaytmHistory(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     TXNID = models.CharField('ORDER ID', max_length=70)
     BANKTXNID = models.CharField('BANK TXN ID', max_length=60, null=True, blank=True)
     ORDERID = models.CharField('ORDER ID', max_length=70)
