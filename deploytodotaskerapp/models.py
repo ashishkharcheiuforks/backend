@@ -92,7 +92,8 @@ class PaytmHistory(models.Model):
     MID = models.CharField(max_length=40)
     RESPMSG = models.TextField('RESP MSG', max_length=250)
     TXNAMOUNT = models.FloatField('TXN AMOUNT')
-    STATUS = models.CharField('STATUS', max_length=12)
+    STATUS = models.CharField('STATUS', max_length=30)
+    resultStatus = models.CharField('STATUS', max_length=30,default='unrecognized')
 
     def __unicode__(self):
         return self.STATUS

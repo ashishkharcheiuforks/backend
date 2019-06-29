@@ -194,7 +194,7 @@ def response(request):
         # url = "https://securegw.paytm.in/order/status"
 
         res = requests.post(url, data = post_data, headers = {"Content-type": "application/json"}).json()
-        res_dict=json.loads(res.text)
+        res_dict=res['body']['resultInfo']
         #st=r.json()
         
         staus=res_dict['STATUS']
