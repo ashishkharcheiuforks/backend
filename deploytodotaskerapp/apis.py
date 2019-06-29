@@ -205,19 +205,11 @@ def response(request):
                    quantity = meal["quantity"],
                    sub_total = Meal.objects.get(id = meal["meal_id"]).price * meal["quantity"]
                    )
-            PaytmHistory.objects.create(customer=customer,**pay_res)#, **data_dict
+            #step 4 save the payment
+            PaytmHistory.objects.create(customer=customer,order=order,**pay_res)
             return JsonResponse(back_response)
         return JsonResponse(back_response)
-        #for key in request.POST:
-         #   data_dict[key] = request.POST[key]
-        #verify = Checksum.verify_checksum(data_dict, MERCHANT_KEY, data_dict['CHECKSUMHASH'])
-        #if verify:
-         ##   PaytmHistory.objects.create(user=request.user, **data_dict)
-          #  return render(request,"response.html",{"paytm":data_dict})
-        #else:
-            #return HttpResponse("checksum verify failed")
-   # return HttpResponse(status=200)
-
+       
 
 def customer_get_latest_order(request):
     access_token = AccessToken.objects.get(token = request.GET.get("access_token"),
