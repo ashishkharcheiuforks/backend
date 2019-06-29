@@ -136,7 +136,7 @@ def response(request):
         MERCHANT_KEY = settings.PAYTM_MERCHANT_KEY
         MERCHANT_ID = settings.PAYTM_MERCHANT_ID
         orderId=request.POST['ORDER_ID']
-        CALLBACK_URL ="https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=" + orderId
+        #CALLBACK_URL ="https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=" + orderId
 
         # Get token
         access_token = AccessToken.objects.get(token = request.POST.get("access_token"),expires__gt = timezone.now())
@@ -151,44 +151,25 @@ def response(request):
         for meal in order_details:
             order_total += Meal.objects.get(id = meal["meal_id"]).price * meal["quantity"]
         bill_amount = str(order_total)
-        ##bill_amount ='100'
+       # initialize a dictionary
+        
+        paytmParams = dict()
+    
+        # Find your MID in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys
+        paytmParams["MID"] = MERCHANT_ID
 
-        #data_dict = {
-         #       'MERCHANT_ID':MERCHANT_ID,
-          #      'ORDER_ID':orderId,
-           #     'TXN_AMOUNT': bill_amount,
-            #    'CUST_ID':customer.user.username,
-             #   'CALLBACK_URL':CALLBACK_URL,
-              #  'CHANNEL_ID':'WEB',
-               # 'WEBSITE': 'WEBSTAGING',
-                #'INDUSTRY_TYPE_ID':'Retail',
+        # Enter your order id which needs to be check status for
+        paytmParams["ORDERID"] = orderId
 
-       # }
-
-
-        data_dict = {
-            'MID':MERCHANT_ID,
-            'ORDERID':orderId
-
-        }
-
-        post_data = data_dict
-        post_data['CHECKSUMHASH'] = Checksum.generate_checksum(data_dict, MERCHANT_KEY)
-
-        # initialize a dictionary
-        #paytmParams = {
-         #   'MID':MERCHANT_ID,
-          #  'CHECKSUMHASH':'param_dict['CHECKSUMHASH'],
-            #'ORDERID':'ggdff'
-
-        #}
+        # Generate checksum by parameters we have in body
+        # Find your Merchant Key in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys 
+        checksum = Checksum.generate_checksum(paytmParams, MERCHANT_KEY)
 
         # put generated checksum value here
-        #paytmParams['CHECKSUMHASH'] = param_dict['CHECKSUMHASH']
+        paytmParams["CHECKSUMHASH"] = checksum
 
         # prepare JSON string for request
-        #post_data = paytmParams
-
+        post_data = json.dumps(paytmParams)
         # for Staging
         url = "https://securegw-stage.paytm.in/order/status"
 
