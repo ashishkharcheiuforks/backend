@@ -172,13 +172,21 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.load_extra_data',
     'social.pipeline.user.user_details',
 )
-#paytm mid: Ulbgcl83114033677105 paytm test secret key: ca22yp3gV!0d&%L8
+
+##################For payTM payment################################
+## Find your MID in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys
 PAYTM_MERCHANT_KEY = "ca22yp3gV!0d&%L8"
 PAYTM_MERCHANT_ID = "Ulbgcl83114033677105"
 PAYTM_WEBSITE = 'WEB_STAGING'
-
-STRIPE_API_KEY = 'sk_test_lOwRe5hiXBypwwU6x2PPgXmj'
-
+CALLBACK_URL="https://securegw.paytm.in/theia/paytmCallback?ORDER_ID="
+CHANNEL_ID='WEB'
+WEBSITE='WEBSTAGING'
+INDUSTRY_TYPE_ID='Retail'
+## for staging## see at : https://developer.paytm.com/docs/transaction-status-api
+VERIFY_URL="https://securegw-stage.paytm.in/order/status"
+## for production
+#VERIFY_URL="https://securegw.paytm.in/order/status" 
+######################################################################
 try:
     from.local_settings import *
 except ImportError:

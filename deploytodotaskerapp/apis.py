@@ -59,64 +59,47 @@ def customer_add_order(request):
 
     if request.method == "POST":
 
+        ## Get Paytm param Details
+        MERCHANT_KEY = settings.PAYTM_MERCHANT_KEY
+        MERCHANT_ID = settings.PAYTM_MERCHANT_ID
+        CALLBACK_URL =settings.CALLBACK_URL + order_id
+        CHANNEL_ID = settings.CHANNEL_ID
+        WEBSITE=settings.WEBSITE
+        NDUSTRY_TYPE_ID=settings.NDUSTRY_TYPE_ID
 
-
-        # Check whether customer has any order that is not delivered
-        #if Order.objects.filter(customer = customer).exclude(status = Order.DELIVERED):
-           ## return JsonResponse({"status": "failed", "error": "Your last order must be completed."})
-
-        # Check Address
-        #if not request.POST["address"]:
-           # return JsonResponse({"status": "failed", "error": "Address is required."})
-
-        # Get Order Details
-
-        # Get token
+        ## Get token
         access_token = AccessToken.objects.get(token = request.POST.get("access_token"),expires__gt = timezone.now())
 
-        # Get profile
+        ## Get profile
         customer = access_token.user.customer
 
-        
-
-        #order_total = 10
-        
+        ##get order details        
         order_details = json.loads(request.POST["order_details"])
         order_total=0
         for meal in order_details:
             order_total += Meal.objects.get(id = meal["meal_id"]).price * meal["quantity"]
-            
-        MERCHANT_KEY = settings.PAYTM_MERCHANT_KEY
-        MERCHANT_ID = settings.PAYTM_MERCHANT_ID
+        bill_amount = str(order_total)
+ 
+        ## Generating unique  ids
+        order_id = Checksum.__id_generator__()
         
 
-        # Generating unique temporary ids
-        order_id = Checksum.__id_generator__()
-        CALLBACK_URL ="https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=" + order_id
-
-
-        #if len(order_details) >= 0:
-        bill_amount = str(order_total)
-       ## bill_amount = '100'
-                #if bill_amount:
         data_dict = {
                 'MERCHANT_ID':MERCHANT_ID,
                 'ORDER_ID':order_id,
                 'TXN_AMOUNT': bill_amount,
                 'CUST_ID':customer.user.username,
                 'CALLBACK_URL':CALLBACK_URL,
-                'CHANNEL_ID':'WEB',
-                'WEBSITE': 'WEBSTAGING',
-                'INDUSTRY_TYPE_ID':'Retail',
+                'CHANNEL_ID':CHANNEL_ID,
+                'WEBSITE': WEBSITE,
+                'INDUSTRY_TYPE_ID':INDUSTRY_TYPE_ID,
                  
         }
         param_dict = data_dict
         param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(data_dict, MERCHANT_KEY)
         
         return JsonResponse(param_dict)
-        #else:
-        #return HttpResponse("{% for key,value in paytm.items %} {{key}} =  {{value}} <br>{% endfor %}")#JsonResponse({"payt_STATUS": "failed"})
-
+        
 
 @csrf_exempt
 def response(request):
@@ -127,58 +110,40 @@ def response(request):
         MERCHANT_KEY = settings.PAYTM_MERCHANT_KEY
         MERCHANT_ID = settings.PAYTM_MERCHANT_ID
         orderId=request.POST['ORDER_ID']
-        #CALLBACK_URL ="https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=" + orderId
+    
 
-        # Get token
+        ## Get token
         access_token = AccessToken.objects.get(token = request.POST.get("access_token"),expires__gt = timezone.now())
 
-        # Get profile
+        ## Get profile
         customer = access_token.user.customer
 
-        #Get Order Details
+        ## Get Order Details
         order_details = json.loads(request.POST["order_details"])
 
         order_total = 0
         for meal in order_details:
             order_total += Meal.objects.get(id = meal["meal_id"]).price * meal["quantity"]
         bill_amount = str(order_total)
-       # initialize a dictionary
-        
+
+        ## initialize a dictionary
         paytmParams = dict()
-    
-        # Find your MID in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys
         paytmParams["MID"] = MERCHANT_ID
-
-        # Enter your order id which needs to be check status for
         paytmParams["ORDERID"] = orderId
-
-        # Generate checksum by parameters we have in body
-        # Find your Merchant Key in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys 
+        ## Generate checksum by parameters we have in body
         checksum = Checksum.generate_checksum(paytmParams, MERCHANT_KEY)
-
-        # put generated checksum value here
+        ## put generated checksum value here
         paytmParams["CHECKSUMHASH"] = checksum
-
-        # prepare JSON string for request
+        ## prepare JSON string for request
         post_data = json.dumps(paytmParams)
-        # for Staging
-        url = "https://securegw-stage.paytm.in/order/status"
 
-        # for Production
-        # url = "https://securegw.paytm.in/order/status"
-
+        url = settings.VERIFY_URL
         pay_res = requests.post(url, data = post_data, headers = {"Content-type": "application/json"}).json()
-        #print(res)
+        
         if('ErrorMsg' in pay_res):
             return JsonResponse({'PAY_STATUS':pay_res['ErrorMsg']})
 
-        
-        #res_dict=res['body']['resultInfo']
-        #st=r.json()
-        
         status=pay_res['STATUS']
-        
-        #status='TX_SUCCESS'
         back_response={
                 'PAY_STATUS':status,
             }
@@ -197,7 +162,7 @@ def response(request):
                address = request.POST["address"]
             )
 
-            # Step 3 - Create Order details
+            ## Step 3 - Create Order details
             for meal in order_details:
                 OrderDetails.objects.create(
                    order = order,
@@ -205,7 +170,7 @@ def response(request):
                    quantity = meal["quantity"],
                    sub_total = Meal.objects.get(id = meal["meal_id"]).price * meal["quantity"]
                    )
-            #step 4 save the payment
+            ## step 4 save the payment
             PaytmHistory.objects.create(customer=customer,order=order,**pay_res)
             return JsonResponse(back_response)
         return JsonResponse(back_response)
