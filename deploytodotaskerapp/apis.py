@@ -214,7 +214,7 @@ def response(request):
                    quantity = meal["quantity"],
                    sub_total = Meal.objects.get(id = meal["meal_id"]).price * meal["quantity"]
                    )
-            PaytmHistory.objects.create(user=request.user,**pay_res)#, **data_dict
+            PaytmHistory.objects.create(customer,**pay_res)#, **data_dict
             return JsonResponse(back_response)
         return JsonResponse(back_response)
         #for key in request.POST:
