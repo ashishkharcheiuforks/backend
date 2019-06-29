@@ -153,34 +153,41 @@ def response(request):
         bill_amount = str(order_total)
         ##bill_amount ='100'
 
+        #data_dict = {
+         #       'MERCHANT_ID':MERCHANT_ID,
+          #      'ORDER_ID':orderId,
+           #     'TXN_AMOUNT': bill_amount,
+            #    'CUST_ID':customer.user.username,
+             #   'CALLBACK_URL':CALLBACK_URL,
+              #  'CHANNEL_ID':'WEB',
+               # 'WEBSITE': 'WEBSTAGING',
+                #'INDUSTRY_TYPE_ID':'Retail',
+
+       # }
+
+
         data_dict = {
-                'MERCHANT_ID':MERCHANT_ID,
-                'ORDER_ID':orderId,
-                'TXN_AMOUNT': bill_amount,
-                'CUST_ID':customer.user.username,
-                'CALLBACK_URL':CALLBACK_URL,
-                'CHANNEL_ID':'WEB',
-                'WEBSITE': 'WEBSTAGING',
-                'INDUSTRY_TYPE_ID':'Retail',
+            'MID':MERCHANT_ID,
+            'ORDERID':orderId
 
         }
 
-        param_dict = data_dict
-        param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(data_dict, MERCHANT_KEY)
+        post_data = data_dict
+        post_data['CHECKSUMHASH'] = Checksum.generate_checksum(data_dict, MERCHANT_KEY)
 
         # initialize a dictionary
-        paytmParams = {
-            'MID':'Ulbgcl83114033677105',
-            'CHECKSUMHASH':'sdddddddddddddd',
-            'ORDERID':'ggdff'
+        #paytmParams = {
+         #   'MID':MERCHANT_ID,
+          #  'CHECKSUMHASH':'param_dict['CHECKSUMHASH'],
+            #'ORDERID':'ggdff'
 
-        }
+        #}
 
         # put generated checksum value here
         #paytmParams['CHECKSUMHASH'] = param_dict['CHECKSUMHASH']
 
         # prepare JSON string for request
-        post_data = paytmParams
+        #post_data = paytmParams
 
         # for Staging
         url = "https://securegw-stage.paytm.in/order/status"
