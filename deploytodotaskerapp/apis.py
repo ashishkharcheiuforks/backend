@@ -88,7 +88,7 @@ def customer_add_order(request):
             
         MERCHANT_KEY = settings.PAYTM_MERCHANT_KEY
         MERCHANT_ID = settings.PAYTM_MERCHANT_ID
-        #get_lang = "/" + get_language() if get_language() else ''
+        
 
         # Generating unique temporary ids
         order_id = Checksum.__id_generator__()
@@ -108,11 +108,11 @@ def customer_add_order(request):
                 'CHANNEL_ID':'WEB',
                 'WEBSITE': 'WEBSTAGING',
                 'INDUSTRY_TYPE_ID':'Retail',
-                 # 'payt_STATUS':'success'
+                 
         }
         param_dict = data_dict
         param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(data_dict, MERCHANT_KEY)
-        #return render(request,"response.html",{"paytm":param_dict})
+        
         return JsonResponse(param_dict)
         #else:
         #return HttpResponse("{% for key,value in paytm.items %} {{key}} =  {{value}} <br>{% endfor %}")#JsonResponse({"payt_STATUS": "failed"})
@@ -121,15 +121,6 @@ def customer_add_order(request):
 @csrf_exempt
 def response(request):
 
-   if request.method=="GET":
-        url = "https://securegw.paytm.in/order/status"
-        post_data={
-            'MID':'Ulbgcl83114033677105',
-            "CHECKSUMHASH":"sdddddddddddddd",
-            "ORDERID":"ggdff"
-            }
-        r = requests.post(url, data = post_data, headers = {"Content-type": "application/json"}).json()
-        return JsonResponse(r.json())
 
    if request.method == "POST":
 
